@@ -1,0 +1,7 @@
+CONFIGURE ENV  FILE AS
+
+/** PROD_DATABASE = mongodb://localhost:27017/credpaldb
+DEV_DATABASE = mongodb://localhost:27017/credpaldb
+JWT_SECRET_KEY = credpal_login
+NODE_ENV = development
+**/
