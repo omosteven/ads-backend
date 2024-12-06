@@ -25,10 +25,8 @@ class AmazonService {
   constructor() {
     this.endpoint = process.env.PA_API_ENDPOINT || "";
     this.region = process.env.PA_API_REGION || "";
-    this.accessKey =
-      process.env.AWS_ACCESS_KEY_ID ||
-      "AKIAIJUHVTBVRZQOQB7Q";
-    this.secretKey = process.env.AWS_SECRET_ACCESS_KEY || "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";
+    this.accessKey = process.env.AWS_ACCESS_KEY_ID || "";
+    this.secretKey = process.env.AWS_SECRET_ACCESS_KEY || "";
     this.partnerTag = "biz29-21"; // Replace with your Amazon Affiliate Tag
 
     if (!this.endpoint || !this.region || !this.accessKey || !this.secretKey) {
