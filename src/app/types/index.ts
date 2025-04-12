@@ -35,3 +35,11 @@ export interface IOrder {
   whatsappNo?: string;
   state?: string;
 }
+
+export interface IContactUs {
+  fullName?: string;
+  email: string;
+  organization: string;
+  address: string;
+  telephone: string;
+}

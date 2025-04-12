@@ -1,11 +1,12 @@
 import AmazonService from "../services/amazon.service";
-import { IProduct } from "../types/index";
+import { IContactUs, IProduct } from "../types/index";
 
 import { NextFunction, Request, Response } from "express";
 import axios from "axios";
 // import { GraphQLClient } from "graphql-request";
 
 import dotenv from "dotenv";
+import { sendContactEmail } from "../services/email.service";
 
 dotenv.config();
 
@@ -106,6 +107,42 @@ class ProductController {
       return res
         .status(500)
         .json({ error: "Failed to fetch products.", details: error?.message });
+    }
+  }
+
+  static async contactUs(req: Request, res: Response, next: NextFunction) {
+    const { email, fullName, telephone, address, organization }: IContactUs =
+      req.body || {};
+
+    try {
+      if (!email || !fullName || !telephone || !address || !organization) {
+        return res.status(400).json({
+          code: 400,
+          message: "Invalid Payload",
+        });
+      }
+
+      await sendContactEmail(
+        email,
+        "We have received your message",
+        `<h3>You Have A New Message from - ${fullName}</h3>
+        <p>Their info are as below:</p>
+        <p>Organization: ${organization}</p>
+        <p>Address: ${address}</p>
+        <p>Telephone: ${telephone}</p>
+        <p>Email: ${email}</p>`
+      );
+
+      await sendContactEmail(
+        email,
+        "We have received your message",
+        "Thank you for dropping your information with us. We will reach out to you soon"
+      );
+    } catch (e) {
+      return res.status(400).json({
+        code: 400,
+        message: "Sorry an error occurred.",
+      });
     }
   }
 }
