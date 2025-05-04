@@ -123,7 +123,7 @@ class ProductController {
       }
 
       await sendContactEmail(
-        email,
+        "hello@buythus.com",
         "We have received your message",
         `<h3>You Have A New Message from - ${fullName}</h3>
         <p>Their info are as below:</p>
@@ -138,6 +138,11 @@ class ProductController {
         "We have received your message",
         "Thank you for dropping your information with us. We will reach out to you soon"
       );
+
+      return res.status(200).json({
+        code: 200,
+        message: "Message sent",
+      });
     } catch (e) {
       return res.status(400).json({
         code: 400,

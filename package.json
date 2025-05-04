@@ -48,6 +48,8 @@
     "nonce": "^1.0.4",
     "payload-validator": "^1.0.4",
     "request-promise": "^4.2.6",
+    "sib-api-v3-sdk": "8.5.0",
+    "sib-api-v3-typescript": "2.2.2",
     "streamifier": "^0.1.1",
     "validator": "^13.12.0"
   }
