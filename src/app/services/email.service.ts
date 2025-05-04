@@ -3,8 +3,9 @@ import SibApiV3Sdk from 'sib-api-v3-sdk';
 
 var defaultClient = SibApiV3Sdk.ApiClient.instance;
 
+var send ='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'
 var apiKey = defaultClient.authentications['api-key'];
-apiKey.apiKey = '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';
+apiKey.apiKey = send;
 
 // Uncomment below two lines to configure authorization using: partner-key
 // var partnerKey = defaultClient.authentications['partner-key'];
