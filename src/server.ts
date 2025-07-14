@@ -14,13 +14,13 @@ import cookieParser from "cookie-parser";
 import querystring from "querystring";
 import request from "request-promise";
 
-// import connectDB from "./config/database";
+import connectDB from "./config/database";
 
 const app = express();
 
 dotenv.config();
 
-// connectDB();
+connectDB();
 
 // const requiredEnvVars = ["SHOPIFY_API_KEY", "SHOPIFY_API_SECRET", "PORT"];
 // requiredEnvVars.forEach((envVar) => {

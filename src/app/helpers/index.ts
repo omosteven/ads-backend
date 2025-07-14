@@ -99,6 +99,92 @@ class Helpers {
       );
     });
   }
+
+  static getFormattedDate = (date?: string) => {
+    let monthList = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sept",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+
+    let dateTime = date ? new Date(date) : new Date();
+
+    let fullYear = dateTime.getFullYear();
+    let month = dateTime.getMonth();
+    let day = dateTime.getDate();
+    let dayString = String(day);
+    if (day < 10 && day > 0) {
+      dayString = `0${day}`;
+    }
+
+    let hour = dateTime.getHours();
+    let minute = dateTime.getMinutes();
+
+    return `${dayString} ${monthList[month]} ${fullYear} ${hour}:${minute}`;
+  };
+
+  static genRandomCode = (): string => {
+    function randomString(length: number): string {
+      let result = "";
+      let characters = "";
+
+      const startCharCode: number = "a".charCodeAt(0);
+      const endCharCode: number = "z".charCodeAt(0);
+
+      for (let i = startCharCode; i <= endCharCode; i++) {
+        characters += String.fromCharCode(i);
+      }
+
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(
+          Math.floor(Math.random() * characters.length)
+        );
+      }
+      return result;
+    }
+
+    return `${randomString(2)}-${randomString(3)}-${Math.floor(
+      Date.now() / 1000
+    )}`;
+  };
+
+  static genDiscountCode = (): string => {
+    function randomString(length: number): string {
+      let result = "";
+      let characters = "";
+
+      const startCharCode: number = "a".charCodeAt(0);
+      const endCharCode: number = "z".charCodeAt(0);
+
+      for (let i = startCharCode; i <= endCharCode; i++) {
+        characters += String.fromCharCode(i);
+      }
+
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(
+          Math.floor(Math.random() * characters.length)
+        );
+      }
+      return result;
+    }
+
+    return `${randomString(3)?.toUpperCase?.()}${randomString(
+      3
+    )?.toUpperCase?.()}`;
+
+    // ?.toUpperCase?.()}${Math.floor(Date.now() / 1000)
+    //   .toString()
+    //   .split("", 2)
+  };
 }
 
 export default Helpers;

@@ -9,8 +9,14 @@ import MiscController from "../controllers/misc.controller";
 const { register, login, getProfile, updateProfile, deleteAccount } =
   AdminController;
 
-const { getAll, fetchProducts, fetchShopifyProducts, contactUs } =
-  ProductController;
+const {
+  getAll,
+  fetchProducts,
+  fetchShopifyProducts,
+  contactUs,
+  joinAsCompany,
+  fetchAllDiscounts,
+} = ProductController;
 const { uploadFile } = MiscController;
 
 const router = Router();
@@ -23,6 +29,8 @@ router.post("/auth/login", login);
 
 router.post("/joinus", contactUs);
 
+router.post("/join-as-company", joinAsCompany);
+
 router.get("/user", auth, getProfile);
 
 router.patch("/user", auth, updateProfile);
@@ -32,6 +40,8 @@ router.delete("/user", auth, deleteAccount);
 router.get("/products", fetchProducts);
 
 router.get("/shopify-products", fetchShopifyProducts);
+
+router.get("/discounts", fetchAllDiscounts);
 
 router.post("/upload", formData.single("file"), uploadFile);
 

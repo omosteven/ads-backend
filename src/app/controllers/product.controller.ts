@@ -7,6 +7,9 @@ import axios from "axios";
 
 import dotenv from "dotenv";
 import { sendContactEmail } from "../services/email.service";
+import CompanyModel from "../models/company.model";
+import Helpers from "../helpers";
+import DiscountModel from "../models/discount.model";
 
 dotenv.config();
 
@@ -37,6 +40,8 @@ const shopifyStores = [
   //   token: process.env.SHOPIFY_API_TOKEN_2!,
   // },
 ];
+
+const { genDiscountCode } = Helpers;
 
 class ProductController {
   static async getAll(req: Request, res: Response, next: NextFunction) {}
@@ -142,6 +147,99 @@ class ProductController {
       return res.status(200).json({
         code: 200,
         message: "Message sent",
+      });
+    } catch (e) {
+      return res.status(400).json({
+        code: 400,
+        message: "Sorry an error occurred.",
+      });
+    }
+  }
+
+  static async joinAsCompany(req: Request, res: Response, next: NextFunction) {
+    const { email, fullName, telephone, address, organization }: IContactUs =
+      req.body || {};
+
+    try {
+      if (!email || !fullName || !telephone || !address || !organization) {
+        return res.status(400).json({
+          code: 400,
+          message: "Invalid Payload",
+        });
+      }
+
+      const newCompany = new CompanyModel({
+        orgEmail: email,
+        orgAddress: address,
+        orgName: organization,
+        contactName: fullName,
+        contactNumber: telephone,
+      });
+
+      await newCompany.save();
+
+      const discountCode = genDiscountCode();
+
+      const newDiscount = new DiscountModel({
+        companyId: newCompany.id,
+        percentage: 5,
+        realValue: 0,
+        minOrderPrice: 5,
+        currency: "GBP",
+        discountCode,
+      });
+
+      await newDiscount.save();
+
+      console.log({ newCompany });
+
+      console.log({ newDiscount });
+      // await sendContactEmail(
+      //   "hello@buythus.com",
+      //   "We have received your message",
+      //   `<h3>You Have A New Message from - ${fullName}</h3>
+      //   <p>Their info are as below:</p>
+      //   <p>Organization: ${organization}</p>
+      //   <p>Address: ${address}</p>
+      //   <p>Telephone: ${telephone}</p>
+      //   <p>Email: ${email}</p>`
+      // );
+
+      // await sendContactEmail(
+      //   email,
+      //   "We have received your message",
+      //   `Thank you for dropping your information with us. We will reach out to you soon. Also a discount code: ${discountCode} has been generated for your company too.`
+      // );
+
+      return res.status(200).json({
+        code: 200,
+        message: "Message sent",
+      });
+    } catch (e) {
+      return res.status(400).json({
+        code: 400,
+        message: "Sorry an error occurred.",
+      });
+    }
+  }
+
+  static async fetchAllDiscounts(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const discounts = await DiscountModel.find(
+        {},
+        {},
+        {
+          populate: ["companyId"],
+        }
+      );
+      return res.status(200).json({
+        code: 200,
+        message: "Success.",
+        data: discounts,
       });
     } catch (e) {
       return res.status(400).json({
