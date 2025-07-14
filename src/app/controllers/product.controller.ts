@@ -191,25 +191,25 @@ class ProductController {
 
       await newDiscount.save();
 
-      console.log({ newCompany });
+      // console.log({ newCompany });
 
-      console.log({ newDiscount });
-      // await sendContactEmail(
-      //   "hello@buythus.com",
-      //   "We have received your message",
-      //   `<h3>You Have A New Message from - ${fullName}</h3>
-      //   <p>Their info are as below:</p>
-      //   <p>Organization: ${organization}</p>
-      //   <p>Address: ${address}</p>
-      //   <p>Telephone: ${telephone}</p>
-      //   <p>Email: ${email}</p>`
-      // );
+      // console.log({ newDiscount });
+      await sendContactEmail(
+        "hello@buythus.com",
+        "We have received your message",
+        `<h3>You Have A New Message from - ${fullName}</h3>
+        <p>Their info are as below:</p>
+        <p>Organization: ${organization}</p>
+        <p>Address: ${address}</p>
+        <p>Telephone: ${telephone}</p>
+        <p>Email: ${email}</p>`
+      );
 
-      // await sendContactEmail(
-      //   email,
-      //   "We have received your message",
-      //   `Thank you for dropping your information with us. We will reach out to you soon. Also a discount code: ${discountCode} has been generated for your company too.`
-      // );
+      await sendContactEmail(
+        email,
+        "We have received your message",
+        `Thank you for dropping your information with us. We will reach out to you soon. Also a discount code: ${discountCode} has been generated for your company too.`
+      );
 
       return res.status(200).json({
         code: 200,
